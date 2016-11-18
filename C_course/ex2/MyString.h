@@ -7,3 +7,7 @@ int extendedSubStr(int isCyclic, int step, const char* str1,
 
 //Sorts the words in str separated by the chars in delim.
 void sortDelim(char str[], const char* delim);
+
+
+int strcmp(char s1[], char s2[]);
+

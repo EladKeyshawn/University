@@ -22,6 +22,6 @@ for x in range(files_range):
     out.close()
     input_file.close()
     if not filecmp.cmp('test.out', test_dir+test_file_out%(x)):
-        print "draw %s" %(x) , "false"
+        print "draw %s" %(x) , "failed"
     else:
-        print "draw %s" %(x) , "true"
+        print "draw %s" %(x) , "passed"
