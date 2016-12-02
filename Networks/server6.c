@@ -86,11 +86,11 @@ int main()
 
 		char clientIPAddrReadable[128] = { '\0' };
 		inet_ntop(AF_INET6, &clientAddress.sin6_addr, clientIPAddrReadable, sizeof(clientIPAddrReadable));
-
 		//print details of the client/peer and the data received
 		printf("Received packet from %s:%d \n", clientIPAddrReadable, ntohs(clientAddress.sin6_port));
 		printf("Data is: %s\n", buffer);
-
+        printf("----------------------------\n");
+        
 		//now reply to the Client
 		if (sendto(s, message, messageLen, 0, (struct sockaddr*) &clientAddress, clientAddressLen) == -1)
 		{

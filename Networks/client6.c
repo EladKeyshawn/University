@@ -31,7 +31,8 @@ int main()
 	char bufferReply[80] = { '\0' };
 	char message[] = "Good morning Server!\n";
 	int messageLen = strlen(message) + 1;
-
+    char SERVER_IP6_ADDRESS[128] = {'\0'};
+    
 	// Create socket (now supporting ipv6)
 	if ((s = socket(AF_INET6, SOCK_DGRAM, IPPROTO_UDP)) == -1) // In Windows -1 is SOCKET_ERROR
 	{
@@ -63,21 +64,23 @@ int main()
 	}
 
 	struct sockaddr_in6 fromAddress;
-	//Change type variable from int to socklen_t: int fromAddressSize = sizeof(fromAddress);
-	socklen_t fromAddressSize = sizeof(fromAddress);
-
+    socklen_t fromAddressSize = sizeof(fromAddress);
 	memset((char *)&fromAddress, 0, sizeof(fromAddress));
     
-	// try to receive some data, this is a blocking call
-	if (recvfrom(s, bufferReply, sizeof(bufferReply) -1, 0, (struct sockaddr *) &fromAddress, &fromAddressSize) == -1)
+    //get data
+    if (recvfrom(s, bufferReply, sizeof(bufferReply) -1, 0, (struct sockaddr *) &fromAddress, &fromAddressSize) == -1)
 	{
 		printf("recvfrom() failed with error code  : %d");
 		return -1;
 	}
 
-	printf(bufferReply);
+	printf("recieved: %s", bufferReply);
+    char from_address_readable[128] = {'\0'};
+    inet_ntop(AF_INET6, &fromAddress.sin6_addr, &from_address_readable, sizeof(from_address_readable));
 
-
+    printf("from: %s\n", from_address_readable);
+    
+    
 	close(s);
 
     return 0;
