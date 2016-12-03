@@ -22,7 +22,7 @@
 #include <unistd.h>
 #endif
 
-#define SERVER_IP_ADDRESS "10.0.0.14"
+#define SERVER_IP_ADDRESS "127.0.0.1"
 #define SERVER_PORT 5060
 
 int main()
@@ -31,7 +31,7 @@ int main()
 	char bufferReply[80] = { '\0' };
 	char message[] = "Good morning Server!\n";
 	int messageLen = strlen(message) + 1;
-    char SERVER_IP6_ADDRESS[128] = {'\0'};
+    char SERVER_IP6_ADDRESS[128] = "fe80::1c2c:c37d:6519:8fc1%en0"; // here set the address of the server to connect to.
     
 	// Create socket (now supporting ipv6)
 	if ((s = socket(AF_INET6, SOCK_DGRAM, IPPROTO_UDP)) == -1) // In Windows -1 is SOCKET_ERROR
@@ -47,7 +47,8 @@ int main()
 	memset(&serverAddress, 0, sizeof(serverAddress));
 	serverAddress.sin6_family = AF_INET6;
 	serverAddress.sin6_port = htons(SERVER_PORT);
-    serverAddress.sin6_addr = in6addr_loopback;
+    //    serverAddress.sin6_addr = in6addr_loopback;
+    inet_pton(AF_INET6, &SERVER_IP6_ADDRESS, &(serverAddress.sin6_addr));
     
 //	int rval = inet_pton(AF_INET6, (const char*)SERVER_IP_ADDRESS, &serverAddress.sin_addr);
 //	if (rval <= 0)

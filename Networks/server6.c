@@ -31,7 +31,7 @@ int main()
 	char buffer[80] = { '\0' };
 	char message[] = "Hello Elad!, nice to be your server\n";
 	int messageLen = strlen(message) + 1;
-    char SERVER_IP6_ADDRESS[128] = {'\0'};
+    char SERVER_IP6_ADDRESS[128] = "fe80::1c2c:c37d:6519:8fc1%en0"; // here set ipv6 address to bind to
 	// Create socket
 	if ((s = socket(AF_INET6, SOCK_DGRAM, IPPROTO_UDP)) == -1)
 	{
@@ -44,7 +44,8 @@ int main()
 	memset((char *)&serverAddress, 0, sizeof(serverAddress));
 	serverAddress.sin6_family = AF_INET6;
 	serverAddress.sin6_port = htons(SERVER_PORT);
-    serverAddress.sin6_addr = in6addr_loopback;
+//    serverAddress.sin6_addr = in6addr_loopback;
+    inet_pton(AF_INET6, &SERVER_IP6_ADDRESS, &(serverAddress.sin6_addr));
     
     inet_ntop(AF_INET6, &serverAddress.sin6_addr, &SERVER_IP6_ADDRESS, sizeof(SERVER_IP6_ADDRESS));
     
