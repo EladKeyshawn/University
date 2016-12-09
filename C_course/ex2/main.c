@@ -12,14 +12,12 @@ int main(int argc, char* argv[]) {
     
     char str[] = "aaa*test,hello.world*abcd.zzz";
     const char* delim = ",.*";
-//    sortDelim(str,delim);
     
-//    printf("%c", *str);
-    char *s = "Hellp World";
+    sortDelim(str, delim);
     
-    printf("\n %s \n", s);
-    s[4] = 'o';
-    printf("\n %s \n", s);
+    printf("%s \n", str);
+    
+    
 
     return 0;
 }

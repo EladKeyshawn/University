@@ -1,4 +1,6 @@
 #define NULL 0
+#include <string.h>
+#include <stdio.h>
 
 
 int str_len(char str[]) {
@@ -50,65 +52,112 @@ int word_len_by_delim(char *s) {
     return word_len;
 }
 
-void str_cpy (char* t, char* str) {
-    int i;
-    for (i=0; i < 20; i++) {
-        if(*str != '\0') {
-            t[i] = *str;
+
+void replaceDelim (char str[], const char* delim) {
+    for (int i= 0; i< str_len(str); i++) {
+        if (isDelim(str[i], delim) > 0 ) {
+            str[i] = ';';
         }
-        str++;
     }
 }
 
-
-void sortDelim(char str[], const char* delim) {
-    char *r = str;
-    int words_count = 1;
-    // replace delimiter with ';'
-    while (*r != '\0') {
-        if (isDelim(*r, delim) > 0) {
-            *r = ';';
-            words_count++;
+int get_num_words (char str[]) {
+    int counter = 1;
+    for (int i= 0; i< str_len(str); i++) {
+        if (str[i] == ';' && str[i+1] != '\0' ) {
+            counter++;
         }
     }
-    r = str;
-    char* orig_dup = strdup(str);
-    char *p = strtok (str, ";");
-    char *words_sep[6];
-    int i =0;
-    while (p != NULL)
-    {
-        words_sep[i++] = p;
-        p = strtok (NULL, ";");
-    }
     
-    
-    char t[20];
-    int j;
+    return counter;
+}
 
-    for (i = 1; i < 6; i++) {
-        for (j = 1; j < 6; j++) {
-            if (str_cmp(words_sep[j - 1], words_sep[j]) > 0) {
-                str_cpy(t, words_sep[j - 1]);
-                str_cpy(words_sep[j - 1], words_sep[j]);
-                str_cpy(words_sep[j], t);
+void init_words_arr (char arr [10][5] , char str[]) {
+    int count_ptr = 0;
+    int str_leng = str_len(str);
+    for (int i=0; i<10; i++) {
+        for (int j=0; j < 5; j++) {
+            if (count_ptr < str_leng) {
+                if (str[count_ptr] != ';') {
+                    arr[i][j] = str[count_ptr];
+                }
+                j--;
+                count_ptr++;
             }
         }
     }
-    
-    int index;
-    for (index = 0; index < 6; index++) {
-        char *wrd_runner = words_sep[index];
-        while (*r != '\0' && *wrd_runner != '\0') {
-            *r = *wrd_runner;
-            r++;
-            wrd_runner++;
-        }
-        
-        *r = ';';
-    }
-            
 }
+
+
+void print_words(char arr [10][5]) {
+    for (int i=0; i<10; i++) {
+        printf("[%s]," ,arr[i]);
+    }
+
+}
+
+void sortDelim(char str[], const char* delim) {
+    replaceDelim(str, delim);
+    int num_of_words = get_num_words(str);
+    char arr [10][5];
+    init_words_arr(arr, str);
+    print_words(arr);
+}
+
+
+
+
+
+
+
+//void sortDelim(char str[], const char* delim) {
+//    char *r = str;
+//    int words_count = 1;
+//    // replace delimiter with ';'
+//    while (*r != '\0') {
+//        if (isDelim(*r, delim) > 0) {
+//            *r = ';';
+//            words_count++;
+//        }
+//    }
+//    r = str;
+//    char* orig_dup = strdup(str);
+//    char *p = strtok (str, ";");
+//    char *words_sep[6];
+//    int i =0;
+//    while (p != NULL)
+//    {
+//        words_sep[i++] = p;
+//        p = strtok (NULL, ";");
+//    }
+//    
+//    
+//    char t[20];
+//    int j;
+//
+//    for (i = 1; i < 6; i++) {
+//        for (j = 1; j < 6; j++) {
+//            if (str_cmp(words_sep[j - 1], words_sep[j]) > 0) {
+//                str_cpy(t, words_sep[j - 1]);
+//                str_cpy(words_sep[j - 1], words_sep[j]);
+//                str_cpy(words_sep[j], t);
+//            }
+//        }
+//    }
+//    
+//    int index;
+//    for (index = 0; index < 6; index++) {
+//        char *wrd_runner = words_sep[index];
+//        while (*r != '\0' && *wrd_runner != '\0') {
+//            *r = *wrd_runner;
+//            r++;
+//            wrd_runner++;
+//        }
+//        
+//        *r = ';';
+//    }
+//            
+//}
 
 
 
