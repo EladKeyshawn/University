@@ -31,7 +31,7 @@ int main()
 	char bufferReply[80] = { '\0' };
 	char message[] = "Good morning Server!\n";
 	int messageLen = strlen(message) + 1;
-    char SERVER_IP6_ADDRESS[128] = "fe80::1c2c:c37d:6519:8fc1%en0"; // here set the address of the server to connect to.
+    char SERVER_IP6_ADDRESS[128] = "::1"; // here set the address of the server to connect to.
     
 	// Create socket (now supporting ipv6)
 	if ((s = socket(AF_INET6, SOCK_DGRAM, IPPROTO_UDP)) == -1) // In Windows -1 is SOCKET_ERROR

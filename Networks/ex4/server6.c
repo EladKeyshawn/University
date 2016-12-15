@@ -31,7 +31,7 @@ int main()
 	char buffer[80] = { '\0' };
 	char message[] = "Hello Elad!, nice to be your server\n";
 	int messageLen = strlen(message) + 1;
-    char SERVER_IP6_ADDRESS[128] = "fe80::1c2c:c37d:6519:8fc1%en0"; // here set ipv6 address to bind to
+    char SERVER_IP6_ADDRESS[128] = "::1"; // here set ipv6 address to bind to
 	// Create socket
 	if ((s = socket(AF_INET6, SOCK_DGRAM, IPPROTO_UDP)) == -1)
 	{
